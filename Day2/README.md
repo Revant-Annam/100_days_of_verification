@@ -23,12 +23,8 @@ Each **Full Adder** here is instantiated as a module inside the top-level RCA mo
 ---
 
 ## 🧮 Equations for Full Adder
-\[
-\text{Sum} = A \oplus B \oplus C_{in}
-\]
-\[
-C_{out} = (A \cdot B) + (C_{in} \cdot (A \oplus B))
-\]
+$$\text{Sum} = A \oplus B \oplus C_{in}$$
+$$C_{out} = (A \cdot B) + (C_{in} \cdot (A \oplus B))$$
 
 ---
 
