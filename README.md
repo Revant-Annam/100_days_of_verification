@@ -19,7 +19,7 @@ Each day’s folder contains:
 | [1](./Day1) | 4:1 MUX | Behavioral Modeling (`case`) |
 | [2](./Day2) | 4-bit Ripple Carry Adder | Structural Modeling |
 | [3](./Day3) | Carry Lookahead Adder | Fast Addition Logic |
-| [4](./Day4) | Carry Save Adder | Parallel Adders |
+| [4](./Day4) | Carry Select and skip Adder | Parallel Adders |
 | [5](./Day5) | Basic 4-bit ALU | Combinational Logic (ADD, SUB, AND, OR) |
 | [6](./Day6) | Priority Encoder | Encoding Techniques |
 | [7](./Day7) | 3x8 Decoder | Combinational Logic |
