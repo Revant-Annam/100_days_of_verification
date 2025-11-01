@@ -73,7 +73,7 @@ $$Q_{next} = D$$
 
   * **`always @(posedge clk)`** tells the synthesis tool to create **sequential logic** (a register).
   * **D-FF:** `Q <= D;` synthesizes directly to a **D-type Flip-Flop**.
-  * **JK-FF:** The `case` statement synthesizes to a **D-type Flip-Flop** preceded by multiplexers that implements the characteristic equation $Q_{next} = (J \cdot \neg Q) + (\neg K \cdot Q)$.
+  * **JK-FF:** The `case` statement synthesizes to a **D-type Flip-Flop** preceded by multiplexers that implements the characteristic equation $Q_{next} = (J \cdot \sim Q) + (\sim K \cdot Q)$.
 
 **JK-FF:**
 
