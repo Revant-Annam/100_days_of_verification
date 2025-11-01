@@ -93,5 +93,5 @@ Expected behavior:
 ---
 
 * ✅ **Status:** Completed
-* 🗓 **Day:** 3 / 50
+* 🗓 **Day:** 3 / 100
 * 📚 **Next:** [Day 4 – Carry Select Adder →](../Day4)
