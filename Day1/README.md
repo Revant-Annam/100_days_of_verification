@@ -35,8 +35,8 @@ Behavioral modeling is useful for simulating the logical behavior of a design wi
 
 ## 🧾 Verilog Code
 
-**Design Code — `Day1/mux_behave.v`**
-**Testbench Code — `Day1/tb_mux_4_1.v`**
+* **Design Code — `Day1/mux_behave.v`**
+* **Testbench Code — `Day1/tb_mux_4_1.v`**
 
 ---
 
@@ -63,6 +63,6 @@ Expected behavior: Output follows the input corresponding to the select-line com
 
 ---
 
-✅ **Status:** Completed
-🗓 **Day:** 1 / 50
-📚 **Next:** [Day 2 – Ripple Carry Adder →](../Day02_RippleCarryAdder)
+- ✅ **Status:** Completed
+- 🗓 **Day:** 1 / 50
+- 📚 **Next:** [Day 2 – Ripple Carry Adder →](../Day02_RippleCarryAdder)
