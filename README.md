@@ -22,7 +22,7 @@ Each day’s folder contains:
 | [4](./Day4) | Carry Select and skip Adder | Parallel Adders |
 | [5](./Day5) | Basic 4-bit ALU | Combinational Logic (ADD, SUB, AND, OR) |
 | [6](./Day6) | Priority Encoder | Encoding Techniques |
-| [7](./Day7) | 3x8 Decoder | Combinational Logic |
+| [7](./Day7) | 2x4 Decoder | Combinational Logic |
 | [8](./Day8) | D & JK Flip-Flops | Sequential Elements |
 | [9](./Day9) | Shift Registers (SIPO/PISO) | Sequential Data Movement |
 | [10](./Day10) | 4-bit Sync/Async Counters | Sequential Logic |
