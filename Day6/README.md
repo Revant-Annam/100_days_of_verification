@@ -4,7 +4,7 @@
 
   * Priority Encoder Logic
   * Dataflow Modeling (`assign`)
-  * Combinational Circuits
+  * Truth Tables with "Don't Cares" (`x`)
 
 -----
 
@@ -29,7 +29,7 @@ $$Y_0 = (\sim I_2 \cdot I_1) + I_3$$
 
 ## 🧩 Circuit Diagram
 
-<img width="776" height="106" alt="image" src="https://github.com/user-attachments/assets/2e52a918-abd2-495f-a2a7-d9729bfafe30" />
+<img width="518" height="216" alt="image" src="https://github.com/user-attachments/assets/d82d49c1-8e6e-4b06-b08c-394b7ddb1732" />
 
 -----
 
@@ -56,15 +56,18 @@ This table uses 'x' (don't-care) to show the priority logic. For example, if $I_
 
 ## ⚙️ RTL Design (Synthesis)
 
-**Synthesis** is the automated process of converting high-level RTL code (like Verilog) into a low-level, physical implementation. It's like "compiling" your hardware description. The process generates a **gate-level netlist**, which is a blueprint of the logic gates (AND, OR, NOT) and flip-flops that implement your code.
-
+* `assign Y[1] = I[2] | I[3];` - OR gate.
+* `assign Y[0] = (~I[2])&(I[1]) | I[3];` - one NOT gate, one AND gate, and one OR gate.
+  
 <img width="774" height="263" alt="image" src="https://github.com/user-attachments/assets/da432630-aa91-479f-8c87-ba97afb8a18e" />
 
 -----
 
 ## 📊 Waveform
 
-A **Waveform** is a graph that visually represents the value of signals in your design over time. This is the primary way to debug your code. The simulator runs your testbench and produces this diagram, showing inputs and outputs as high (1) or low (0) lines, allowing you to check if the circuit behaves correctly.
+The inputs `I` are changed every 10ns, and the output Y updates combinationally.
+* At 20ns, I is 5 (0101). The output Y is 2 (10), correctly showing $I_2$ has priority over $I_0$.
+* At 30ns, I is d (1101). The output Y is 3 (11), correctly showing $I_3$ has the highest priority.
 
 <img width="776" height="106" alt="image" src="https://github.com/user-attachments/assets/2e52a918-abd2-495f-a2a7-d9729bfafe30" />
 
