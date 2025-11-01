@@ -91,8 +91,13 @@ A **Waveform** is a graph that visually represents the value (1 or 0) of your de
 to see if your outputs are correct at every time step.
 
   * **D-FF Waveform:** The output `Q` will be observed to change *only* on the positive edge of `clk`. It will exactly match the value of `D` from the previous clock edge, showing the "delay" behavior.
+
+<img width="777" height="135" alt="image" src="https://github.com/user-attachments/assets/816ecea5-78ba-4fb9-a524-32d38f66b514" />
+
   * **JK-FF Waveform:** The `Q` output will change at each `posedge clk` according to the `JK` inputs. The most interesting part is when `JK=2'b11`, where the waveform for `Q` will be seen to invert its own
 value on every clock tick.
+
+<img width="776" height="118" alt="image" src="https://github.com/user-attachments/assets/e78f5ac7-487b-4b5b-b85e-522f3467b5f3" />
 
 -----
 
