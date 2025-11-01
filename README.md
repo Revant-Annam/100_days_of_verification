@@ -26,8 +26,8 @@ Each day’s folder contains:
 | [Day 8](./Day8) | D & JK Flip-Flops | Sequential Elements |
 | [Day 9](./Day9) | Shift Registers (SIPO/PISO) | Sequential Data Movement |
 | [Day 10](./Day10) | 4-bit Sync/Async Counters | Sequential Logic |
-| [Day 11](./Day11) | FSM – Traffic Light Controller | Moore FSM Design |
-| [Day 12](./Day12) | FSM – 1011 Sequence Detector | Mealy FSM Design |
+| [Day 11](./Day11) | FSM – 1011 Sequence Detector | Mealy FSM Design |
+| [Day 12](./Day12) | FSM – Traffic Light Controller | Moore FSM Design |
 | [Day 13](./Day13) | RAM & ROM | Memory Modeling (`reg` array, `$readmemh`) |
 | [Day 14](./Day14) | FIFO (Synchronous) | Buffer Design, Pointers, Full/Empty |
 | [Day 15](./Day15) | FIFO (Asynchronous) | Clock Domain Crossing (CDC), Gray Code |
