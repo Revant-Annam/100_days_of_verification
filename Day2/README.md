@@ -55,9 +55,9 @@ C_{out} = (A \cdot B) + (C_{in} \cdot (A \oplus B))
 
 ## 🧾 Verilog Design
 
-**Full Adder — `Day2/full_adder.v`**
-**Ripple Carry Adder — `Day2/rip_add.v`**
-**Testbench — `Day2/rip_add_tb.v`**
+* **Full Adder — `Day2/full_adder.v`**
+* **Ripple Carry Adder — `Day2/rip_add.v`**
+* **Testbench — `Day2/rip_add_tb.v`**
 
 ---
 
