@@ -2,9 +2,9 @@
 
 ## 📘 Topics Understood
 
-  - Priority Encoder Logic
-  - Dataflow Modeling (`assign`)
-  - Combinational Circuits
+  * Priority Encoder Logic
+  * Dataflow Modeling (`assign`)
+  * Combinational Circuits
 
 -----
 
@@ -29,7 +29,7 @@ $$Y_0 = (\sim I_2 \cdot I_1) + I_3$$
 
 ## 🧩 Circuit Diagram
 
-<img width="518" height="216" alt="image" src="https://github.com/user-attachments/assets/1100861b-30c3-46a6-a267-8e0197ffdf96" />
+<img width="776" height="106" alt="image" src="https://github.com/user-attachments/assets/2e52a918-abd2-495f-a2a7-d9729bfafe30" />
 
 -----
 
@@ -45,8 +45,6 @@ This table uses 'x' (don't-care) to show the priority logic. For example, if $I_
 | 0 | 1 | x | x | 1 | 0 |
 | 1 | x | x | x | 1 | 1 |
 
-*Note: A full industrial design often includes a "Valid" output bit to indicate if any input is active. This design outputs `00` for no input.*
-
 -----
 
 ## 🧾 Verilog Design
@@ -56,7 +54,9 @@ This table uses 'x' (don't-care) to show the priority logic. For example, if $I_
 
 -----
 
-## ⚙️ RTL Design
+## ⚙️ RTL Design (Synthesis)
+
+**Synthesis** is the automated process of converting high-level RTL code (like Verilog) into a low-level, physical implementation. It's like "compiling" your hardware description. The process generates a **gate-level netlist**, which is a blueprint of the logic gates (AND, OR, NOT) and flip-flops that implement your code.
 
 <img width="774" height="263" alt="image" src="https://github.com/user-attachments/assets/da432630-aa91-479f-8c87-ba97afb8a18e" />
 
@@ -64,27 +64,29 @@ This table uses 'x' (don't-care) to show the priority logic. For example, if $I_
 
 ## 📊 Waveform
 
+A **Waveform** is a graph that visually represents the value of signals in your design over time. This is the primary way to debug your code. The simulator runs your testbench and produces this diagram, showing inputs and outputs as high (1) or low (0) lines, allowing you to check if the circuit behaves correctly.
+
 <img width="776" height="106" alt="image" src="https://github.com/user-attachments/assets/2e52a918-abd2-495f-a2a7-d9729bfafe30" />
 
 -----
 
 ## 🔍 Observations
 
-  - The `$monitor` output from the testbench confirms the priority logic.
-  - For `I = 4'b0111`, the output is `Y=10`. This correctly indicates that input $I_2$ is encoded, and the lower-priority inputs ($I_1$, $I_0$) are ignored.
-  - For `I = 4'b1101`, the output is `Y=11`. This confirms $I_3$ has the highest priority, ignoring all other active inputs.
-  - Dataflow modeling with `assign` statements is a concise way to represent this combinational logic.
+  * The `$monitor` output from the testbench confirms the priority logic.
+  * For `I = 4'b0111`, the output is `Y=10`. This correctly indicates that input $I_2$ is encoded, and the lower-priority inputs ($I_1$, $I_0$) are ignored.
+  * For `I = 4'b1101`, the output is `Y=11`. This confirms $I_3$ has the highest priority, ignoring all other active inputs.
+  * Dataflow modeling with `assign` statements is a concise way to represent this combinational logic.
 
 -----
 
 ## 🧩 Industry Relevance
 
-  - **Interrupt Controllers:** Priority encoders are the core logic in a CPU's interrupt controller, which must prioritize multiple interrupt requests (e.g., keyboard, mouse, disk) and service the most critical one first.
-  - **Bus Arbiters:** In a system with multiple "masters" (like a CPU and a DMA controller) trying to access the same bus, a priority encoder is used to decide which master gets access.
-  - **Data Compression:** Used in algorithms that need to find the most significant bit in a data word.
+  * **Interrupt Controllers:** Priority encoders are the core logic in a CPU's interrupt controller, which must prioritize multiple interrupt requests (e.g., keyboard, mouse, disk) and service the most critical one first.
+  * **Bus Arbiters:** In a system with multiple "masters" (like a CPU and a DMA controller) trying to access the same bus, a priority encoder is used to decide which master gets access.
+  * **Data Compression:** Used in algorithms that need to find the most significant bit in a data word.
 
 -----
 
-  - ✅ **Status:** Completed
-  - 🗓 **Day:** 6 / 100
-  - 📚 **Next:** [Day 7 – 3:8 Decoder →](../Day7)
+  * ✅ **Status:** Completed
+  * 🗓 **Day:** 6 / 100
+  * 📚 **Next:** [Day 7 – 3:8 Decoder →](../Day7)
