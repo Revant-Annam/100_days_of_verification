@@ -94,7 +94,7 @@ Expected behavior: Carry ripples through each stage, and the final sum matches t
 ---
 
 - ✅ **Status:** Completed
-- 🗓 **Day:** 2 / 50
+- 🗓 **Day:** 2 / 100
 - 📚 **Next:** [Day 3 – Carry Look-Ahead Adder →](../Day3)
 
 
