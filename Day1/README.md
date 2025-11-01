@@ -35,8 +35,8 @@ Behavioral modeling is useful for simulating the logical behavior of a design wi
 
 ## 🧾 Verilog Code
 
-### Design Code — `mux_behave.v`
-### Testbench Code — `tb_mux_4_1.v`
+**Design Code — `Day1/mux_behave.v`**
+**Testbench Code — `Day1/tb_mux_4_1.v`**
 
 ---
 
