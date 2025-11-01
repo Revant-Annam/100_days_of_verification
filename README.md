@@ -15,7 +15,7 @@ Each day’s folder contains:
 
 | **Day** | **Project** | **Topic Focus** |
 |:--:|:--|:--|
-| [Day 01](./Day01_4to1MUX) | 4:1 MUX | Behavioral Modeling |
+| [Day 01](./Day1) | 4:1 MUX | Behavioral Modeling |
 | [Day 02](./Day02_RippleCarryAdder) | 4-bit Ripple Carry Adder | Structural Modeling |
 | [Day 03](./Day03_CLA) | Carry Lookahead Adder | Fast Addition Logic |
 | [Day 04](./Day04_CSA) | Carry Save Adder | Parallel Adders |
