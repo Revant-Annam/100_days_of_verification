@@ -112,4 +112,4 @@ A **Waveform** is a graph that visually represents the value (1 or 0) of your de
 
   * ✅ **Status:** Completed
   * 🗓 **Day:** 10 / 100
-  * 📚 **Next:** [Day 11 – FSM (Traffic Light Controller) →](../Day11)
+  * 📚 **Next:** [Day 11 – FSM (Sequence Detector) →](../Day11)
