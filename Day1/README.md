@@ -64,5 +64,5 @@ Expected behavior: Output follows the input corresponding to the select-line com
 ---
 
 - ✅ **Status:** Completed
-- 🗓 **Day:** 1 / 50
+- 🗓 **Day:** 1 / 100
 - 📚 **Next:** [Day 2 – Ripple Carry Adder →](../Day2)
