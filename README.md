@@ -16,9 +16,9 @@ Each day’s folder contains:
 | **Day** | **Project** | **Topic Focus** |
 |:--:|:--|:--|
 | [Day 01](./Day1) | 4:1 MUX | Behavioral Modeling |
-| [Day 02](./Day02_RippleCarryAdder) | 4-bit Ripple Carry Adder | Structural Modeling |
-| [Day 03](./Day03_CLA) | Carry Lookahead Adder | Fast Addition Logic |
-| [Day 04](./Day04_CSA) | Carry Save Adder | Parallel Adders |
+| [Day 02](./Day2) | 4-bit Ripple Carry Adder | Structural Modeling |
+| [Day 03](./Day3) | Carry Lookahead Adder | Fast Addition Logic |
+| [Day 04](./Day4) | Carry Save Adder | Parallel Adders |
 | [Day 05](./Day05_CSA_with_CarrySkip) | CSA with Carry Skip Logic | Hybrid Adder Design |
 | [Day 06](./Day06_ALU) | Basic 4-bit ALU | ADD, SUB, AND, OR |
 | [Day 07](./Day07_Decoders) | 2x4 and 3x8 Decoders | Combinational Logic |
