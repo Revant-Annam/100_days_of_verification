@@ -123,5 +123,5 @@ Sum and carry outputs update correctly after each input combination, confirming 
 ---
 
 * ✅ **Status:** Completed
-* 🗓 **Day:** 4 / 50
+* 🗓 **Day:** 4 / 100
 * 📚 **Next:** [Day 5 – Advanced Adder Comparison →](../Day5)
