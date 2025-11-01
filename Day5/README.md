@@ -74,6 +74,6 @@ Expected behavior:
 ---
 
 * ✅ **Status:** Completed
-* 🗓 **Day:** 5 / 50
+* 🗓 **Day:** 5 / 100
 * 📚 **Next:** [Day 6 – Advanced ALU / MUX Integration →](../Day6)
 
