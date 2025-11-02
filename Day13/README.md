@@ -75,32 +75,133 @@ This project implements a **Dual-Port RAM**. This is a memory model with two ind
     endmodule
     ```
 
-  * **ROM (Example) — `Day13/ROM.v`**
+  Here is the complete code for a **synchronous** ROM, where the data output is registered and only appears on the positive edge of the clock.
 
-    ```verilog
-    module ROM #(parameter DATA_WIDTH = 8, ADDR_WIDTH = 4) (
-        input [ADDR_WIDTH-1:0] addr,
-        output reg [DATA_WIDTH-1:0] data_out
+-----
+
+### 1\. `rom.v` (The Synchronous ROM Design)
+
+This Verilog file describes the ROM module. The only change is in the `always` block.
+
+```verilog
+`timescale 1ns / 1ps
+
+module ROM #(
+    parameter DATA_WIDTH = 8,
+    parameter ADDR_WIDTH = 4
+) (
+    input                       clk,
+    input [ADDR_WIDTH-1:0]    addr,
+    output reg [DATA_WIDTH-1:0] data_out
+);
+
+    // Calculate the depth (e.g., 2^4 = 16)
+    localparam DEPTH = 1 << ADDR_WIDTH;
+
+    // Declare the 2D array for the memory
+    // [width] name [depth]
+    reg [DATA_WIDTH-1:0] rom_data [0:DEPTH-1];
+
+    // Initialize the memory from an external file
+    // This is synthesizable for BRAMs/ROMs
+    initial begin
+        $readmemh("rom_data.mem", rom_data);
+    end
+
+    // Synchronous read (output is registered)
+    always @(posedge clk) begin
+        data_out <= rom_data[addr];
+    end
+
+endmodule
+```
+
+-----
+
+### 2\. `rom_data.mem` (The Data File)
+
+This file is exactly the same as before.
+
+```text
+// rom_data.mem
+// This file contains 16 8-bit hex values
+// for the 16x8 ROM (ADDR_WIDTH = 4)
+
+DE // Address 0
+AD // Address 1
+BE // Address 2
+EF // Address 3
+CA // Address 4
+FE // Address 5
+12 // Address 6
+34 // Address 7
+56 // Address 8
+78 // Address 9
+9A // Address 10
+BC // Address 11
+F0 // Address 12
+0D // Address 13
+42 // Address 14
+11 // Address 15
+```
+
+-----
+
+### 3\. `rom_tb.v` (The Testbench)
+
+This testbench is modified to provide a clock to the ROM.
+
+```verilog
+`timescale 1ns / 1ps
+
+module rom_tb;
+
+    // Use the same parameters as the design
+    localparam DATA_WIDTH = 8;
+    localparam ADDR_WIDTH = 4;
+    localparam DEPTH      = 1 << ADDR_WIDTH;
+
+    // Testbench signals
+    reg                       clk;
+    reg  [ADDR_WIDTH-1:0]    addr;
+    wire [DATA_WIDTH-1:0]   data_out;
+    integer i;
+
+    // Instantiate the ROM
+    ROM #(
+        .DATA_WIDTH(DATA_WIDTH),
+        .ADDR_WIDTH(ADDR_WIDTH)
+    ) dut (
+        .clk(clk),
+        .addr(addr),
+        .data_out(data_out)
     );
 
-        // Define the ROM as a 2D array
-        reg [DATA_WIDTH-1:0] rom_data [0:(1<<ADDR_WIDTH)-1];
+    // Clock generator
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk; // 10ns period clock
+    end
 
-        // Initialize the ROM contents
-        initial begin
-            rom_data[0] = 8'hDE;
-            rom_data[1] = 8'hAD;
-            rom_data[2] = 8'hBE;
-            rom_data[3] = 8'hEF;
-            // ... initialize all 16 locations
+    // Test stimulus
+    initial begin
+        $monitor("Time=%t | Address = %h | Data Out = %h", $time, addr, data_out);
+        
+        // Loop through all addresses
+        for (i = 0; i < DEPTH; i = i + 1) begin
+            addr = i;
+            @(posedge clk);
+            // On this clock edge, the ROM samples the address 'i'
+            // The data_out will appear on the *next* clock edge
         end
+        
+        @(posedge clk); // One extra cycle to see the last data
+        $display("--- ROM Read Test Complete ---");
+        $finish;
+    end
 
-        // Read operation (combinational or synchronous)
-        always @(*) begin
-            data_out = rom_data[addr];
-        end
-    endmodule
-    ```
+endmodule
+```
 
   * **Testbench (RAM) — `Day13/RAM_tb.v`**
 
