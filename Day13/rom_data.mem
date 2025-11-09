@@ -1,0 +1,20 @@
+// rom_data.mem
+// This file contains 16 8-bit hex values
+// for the 16x8 ROM (ADDR_WIDTH = 4)
+
+DE // Address 0
+AD // Address 1
+BE // Address 2
+EF // Address 3
+CA // Address 4
+FE // Address 5
+12 // Address 6
+34 // Address 7
+56 // Address 8
+78 // Address 9
+9A // Address 10
+BC // Address 11
+F0 // Address 12
+0D // Address 13
+42 // Address 14
+11 // Address 15
