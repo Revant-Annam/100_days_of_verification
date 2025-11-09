@@ -57,9 +57,13 @@ This project implements two different types of synchronous memory blocks.
       * `if (~ras_b)` synthesizes to a D-flip-flop (`row_reg`) with its enable pin connected to `~ras_b`.
       * `if (~cas_b)` synthesizes to the logic controlling the DRAM's read/write ports, using `row_reg` for the upper address bits and the `addr` port for the lower address bits.
 
-      
+      <img width="1555" height="768" alt="Screenshot from 2025-11-09 22-01-48" src="https://github.com/user-attachments/assets/93509bd7-0d30-4d82-95a9-b346b4542921" />
+
+      <img width="1555" height="768" alt="Screenshot from 2025-11-09 22-01-58" src="https://github.com/user-attachments/assets/03c307d7-bfa8-46bd-baa6-9eb7020f2eea" />
+
   * **ROM (Sync):** The `reg [...] rom_data [...]` line also synthesizes to a DRAM, but in ROM mode. The `$readmemh` task is a **synthesis-time directive** that tells the tool to pre-load the DRAM with the data from `rom_data.mem`.
 
+      <img width="1150" height="565" alt="Screenshot from 2025-11-02 22-35-33" src="https://github.com/user-attachments/assets/3d076fcd-859b-49b4-8afe-fe37bf047578" />
 
 -----
 
@@ -67,9 +71,13 @@ This project implements two different types of synchronous memory blocks.
 
   * **RAM Waveform:** The `RAM_tb.v` simulation will show `ras_b` going low, latching `addr=A4`. Then, `cas_b` goes low, and the `addr=73` is used as the column. The read/write happens at this point. For the read, `data_out` will show the data on the *next* clock edge.
 
-    
+<img width="1255" height="293" alt="Screenshot from 2025-11-09 20-57-19" src="https://github.com/user-attachments/assets/25a53878-63b4-46a0-b85c-ed415ea53d46" />
+
+<img width="649" height="185" alt="Screenshot from 2025-11-09 20-57-43" src="https://github.com/user-attachments/assets/facb98db-de00-4792-82a8-6977a3e6ad85" />
+
   * **ROM Waveform:** The `rom_tb.v` simulation will show a **one-cycle read latency**. When the `addr` changes, `data_out` will still show the data for previous `addr`. On the *next* clock edge, `data_out` will update to the data for next `addr`.
 
+<img width="1268" height="220" alt="Screenshot from 2025-11-02 22-30-17" src="https://github.com/user-attachments/assets/73213ec6-9a74-46be-b234-a5c76414a546" />
 
 -----
 
