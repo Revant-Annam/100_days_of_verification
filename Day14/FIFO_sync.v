@@ -1,5 +1,26 @@
-// Code your design here
-module synchronous_fifo #(
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 11/10/2025 12:27:02 AM
+// Design Name: 
+// Module Name: FIFO_sync
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module FIFO_sync #(
     parameter DEPTH = 16,    // Number of slots in the FIFO
     parameter DATA_WIDTH = 8 // Number of bits per slot
 )(
