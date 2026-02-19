@@ -16,9 +16,9 @@ This is particularly important in high-speed systems where timing discrepancies 
 I implemented the `full` and `empty` logic by directly comparing the read and write pointers.
 
   * **Memory:** I used a simple 2D `reg` array (`buffer`) as the storage.
-  * **Pointers:** `wr_ptr` tracks the next open slot to write to. `rd_ptr` tracks the next slot to read from.
-  * **`empty` Logic:** I set the `empty` flag to be true when `wr_ptr == rd_ptr`.
-  * **`full` Logic:** The `full` condition results in `wr_ptr + 1 == rd_ptr` after the buffer is filled. This means the FIFO signals full when it has DEPTH - 1 (e.g., 7) items in it, leaving one slot unused. This is a standard, low-logic way to build a reliable FIFO.
+  * **Pointers:** `wr_ptr` tracks the open slot to write to. `rd_ptr` tracks the slot to read from.
+  * **`empty` Logic:** I set the `empty` flag to be true when `count==0`.
+  * **`full` Logic:** The `full` condition results in `count==DEPTH` after the buffer is filled.
 
 -----
 
