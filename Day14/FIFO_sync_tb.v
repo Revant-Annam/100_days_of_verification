@@ -1,99 +1,103 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 11/10/2025 12:33:56 AM
-// Design Name: 
-// Module Name: FIFO_sync_tb
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
+// Code your testbench here
+// or browse Examples
+module synchronous_fifo_tb;
 
+    // Parameters
+    parameter DEPTH = 16;
+    parameter DATA_WIDTH = 8;
 
-module FIFO_sync_tb();
-    localparam DATA_WIDTH = 8;
-    localparam DEPTH = 8;
-    localparam ADDR_WIDTH = 3;
-
+    // Inputs
+    reg clk;
+    reg rst_n;
+    reg wr_en;
+    reg rd_en;
     reg [DATA_WIDTH-1:0] data_in;
-    reg wr_en,rd_en, clk,rst;
-    wire [DATA_WIDTH-1:0] d_out;
-    wire full,empty;
-    
-    integer i;
-    
-    FIFO_sync #(DEPTH, DATA_WIDTH, ADDR_WIDTH) fifo_test(
-        .data_in(data_in),
+
+    // Outputs
+    wire [DATA_WIDTH-1:0] data_out;
+    wire full;
+    wire empty;
+
+    // Instantiate the Unit Under Test (UUT)
+    synchronous_fifo #(DEPTH, DATA_WIDTH) uut (
+        .clk(clk),
+        .rst_n(rst_n),
         .wr_en(wr_en),
         .rd_en(rd_en),
-        .clk(clk),
-        .rst(rst),
-        .d_out(d_out),
+        .data_in(data_in),
+        .data_out(data_out),
         .full(full),
         .empty(empty)
     );
-     
+
+    // Clock generation: 10ns period (100MHz)
     always #5 clk = ~clk;
-    
+
+    // Task for FIFO Write (Push)
+    task push(input [DATA_WIDTH-1:0] data);
+        begin
+            @(posedge clk);
+            if (!full) begin
+                wr_en = 1;
+                data_in = data;
+                $display("[TIME: %0t] PUSH: Data = %d", $time, data);
+            end else begin
+                $display("[TIME: %0t] PUSH FAILED: FIFO FULL", $time);
+            end
+            @(posedge clk);
+            wr_en = 0;
+        end
+    endtask
+
+    // Task for FIFO Read (Pop)
+    task pop();
+        begin
+            @(posedge clk);
+            if (!empty) begin
+                rd_en = 1;
+                #1; // Wait for data_out to update
+                $display("[TIME: %0t] POP: Data = %d", $time, data_out);
+            end else begin
+                $display("[TIME: %0t] POP FAILED: FIFO EMPTY", $time);
+            end
+            @(posedge clk);
+            rd_en = 0;
+        end
+    endtask
+
+    // Main Test Sequence
     initial begin
-        $monitor("Time=%t | rst=%b | wr=%b rd=%b full=%b empty=%b | data_in=%d | d_out=%d", 
-                   $time, rst, wr_en, rd_en, full, empty, data_in, d_out);
-        clk = 1;
-        rst = 0; // Assert active-low reset
-        wr_en=0;
-        rd_en=0;
-        data_in =0;
-        
-        @(negedge clk);
-        rst = 1; // De-assert reset
-        
-        // --- Test 1: Fill the FIFO (will be "full" after 7 writes) ---
+        // Initialize signals
+        clk = 0;
+        rst_n = 0;
+        wr_en = 0;
+        rd_en = 0;
+        data_in = 0;
+
+        // Reset the system
+        #20 rst_n = 1;
+        $display("--- Reset Released ---");
+
+        // 1. Write a few items
+        push(8'd10);
+        push(8'd20);
+        push(8'd30);
+
+        // 2. Read those items
+        pop();
+        pop();
+
+        // 3. Fill the FIFO to test FULL flag
         $display("--- Filling FIFO ---");
-        wr_en = 1;
-        rd_en = 0;
-        for(i=0; i<DEPTH; i=i+1) begin // Will only do 7 writes, then full=1
-            data_in = i; 
-            @(negedge clk);
-        end
+        repeat (15) push($random % 100);
         
-        // --- Test 2: Simultaneous Read/Write ---
-        $display("--- Simultaneous R/W ---");
-        wr_en = 1;
-        rd_en = 1;
-        for(i=0; i<DEPTH; i=i+1) begin
-            data_in = i + 10; 
-            @(negedge clk); 
-        end
-        
-        // --- Test 3: Do Nothing ---
-        $display("--- Idle ---");
-        wr_en = 0;
-        rd_en = 0;
-        @(negedge clk);
-        @(negedge clk);
-        
-        // --- Test 4: Drain the FIFO ---
-        $display("--- Draining FIFO ---");
-        wr_en = 0;
-        rd_en = 1;
-        for(i=0; i<DEPTH; i=i+1) begin // Will stop after 7 reads, then empty=1
-            @(negedge clk);
-        end
-        
-        // --- Test 5: Check Empty ---
-        @(negedge clk);
-        rd_en = 0;
-        $display("--- Test Complete ---");
+        // 4. Empty the FIFO to test EMPTY flag
+        $display("--- Emptying FIFO ---");
+        repeat (17) pop();
+
+        #50;
+        $display("--- Test Completed ---");
         $finish;
     end
+
 endmodule
