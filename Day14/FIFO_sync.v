@@ -1,68 +1,52 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 11/10/2025 12:27:02 AM
-// Design Name: 
-// Module Name: FIFO_sync
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
-
-module FIFO_sync #(
-    parameter DEPTH      = 8,
-    parameter DATA_WIDTH = 8,
-    parameter ADDR_WIDTH = 3  // 2^ADDR_WIDTH must == DEPTH
-) (
-    input [DATA_WIDTH-1:0] data_in,
-    input wr_en,
-    input rd_en,
-    input clk,
-    input rst, 
-    output reg [DATA_WIDTH-1:0] d_out,
-    output full,
-    output empty
+// Code your design here
+module synchronous_fifo #(
+    parameter DEPTH = 16,    // Number of slots in the FIFO
+    parameter DATA_WIDTH = 8 // Number of bits per slot
+)(
+    input  wire                  clk,      // System Clock
+    input  wire                  rst_n,    // Active-low Reset
+    input  wire                  wr_en,    // Write Enable
+    input  wire                  rd_en,    // Read Enable
+    input  wire [DATA_WIDTH-1:0] data_in,  // Data to be written
+    output reg  [DATA_WIDTH-1:0] data_out, // Data to be read
+    output wire                  full,     // High if FIFO is full
+    output wire                  empty     // High if FIFO is empty
 );
 
-    reg [DATA_WIDTH-1:0] buffer [DEPTH-1:0];
-    reg [ADDR_WIDTH-1:0] wr_ptr, rd_ptr;
+    // Internal memory and pointers
+    reg [DATA_WIDTH-1:0] fifo_ram [0:DEPTH-1];
+    reg [$clog2(DEPTH)-1:0] w_ptr, r_ptr;
+    reg [$clog2(DEPTH):0]   count; // Counter to track occupancy
 
-    // Logic to calculate the next pointer values
-    wire [ADDR_WIDTH-1:0] wptr_next = (wr_ptr == DEPTH - 1) ? 0 : wr_ptr + 1;
-    wire [ADDR_WIDTH-1:0] rptr_next = (rd_ptr == DEPTH - 1) ? 0 : rd_ptr + 1;
+    // Status Flags Logic
+    assign full  = (count == DEPTH);
+    assign empty = (count == 0);
 
-    // Pointer-based full/empty logic
-    assign empty = (wr_ptr == rd_ptr);
-    assign full  = (wptr_next == rd_ptr); 
-
-    // Pointers and Data-Out Logic
-    always @(posedge clk or negedge rst) begin
-        if (!rst) begin
-            wr_ptr <= 0;
-            rd_ptr <= 0;
-            d_out  <= 0;
+    // Main FIFO Logic
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            w_ptr    <= 0;
+            r_ptr    <= 0;
+            count    <= 0;
+            data_out <= 0;
         end else begin
-            // Write Logic: update buffer and pointer
+            // Write Operation: Only write if enabled and NOT full
             if (wr_en && !full) begin
-                buffer[wr_ptr] <= data_in;
-                wr_ptr <= wptr_next;
+                fifo_ram[w_ptr] <= data_in;
+                w_ptr           <= w_ptr + 1;
+                count           <= count + 1;
             end
 
-            // Read Logic: update data output and pointer
+            // Read Operation: Only read if enabled and NOT empty
             if (rd_en && !empty) begin
-                d_out <= buffer[rd_ptr];
-                rd_ptr <= rptr_next;
+                data_out <= fifo_ram[r_ptr];
+                r_ptr    <= r_ptr + 1;
+                count    <= count - 1;
+            end
+
+            // Handle simultaneous Read and Write to keep count stable
+            if (wr_en && !full && rd_en && !empty) begin
+                count <= count; 
             end
         end
     end
