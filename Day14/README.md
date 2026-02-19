@@ -45,9 +45,8 @@ When I synthesized this design, the tool inferred:
 
   * **Memory:** A **Block RAM (BRAM)** for the `buffer` array.
   * **Pointers:** The `wr_ptr` and `rd_ptr` synthesized into 3-bit registers (which act as counters).
-  * **`full`/`empty` Logic:** This was synthesized into simple, fast combinational logic:
-      * `empty`: One 3-bit comparator (`wr_ptr == rd_ptr`).
-      * `full`: One 3-bit adder (for `wr_ptr + 1`), a MUX (for the wrap-around), and one 3-bit comparator.
+  * **`full`/`empty` Logic:** This was synthesized into counter, fast combinational logic:
+      * `count`: This creates a counter which sets the `empty` or `full` flags.
 
 <img width="522" height="501" alt="Screenshot from 2026-02-19 14-25-50" src="https://github.com/user-attachments/assets/a2e6a2bf-5492-48d5-aab6-69b46cec2c69" />
 
@@ -57,20 +56,17 @@ When I synthesized this design, the tool inferred:
 
 My simulation waveform showed:
 
-1.  **Fill:** `wr_en=1`, `rd_en=0`. I wrote 7 items (0-6). On the 7th write, `wptr` became 7. `wptr_next` became 0, which equaled `rd_ptr` (still 0). The `full` flag asserted. The 8th write in the testbench loop was blocked.
-2.  **Simultaneous R/W:** `wr_en=1`, `rd_en=1`. The pointers "chased" each other around the buffer, and the `full` flag remained asserted.
-3.  **Drain:** `wr_en=0`, `rd_en=1`. I read 7 items. When the last item was read, `rd_ptr` incremented to 7, making it equal to `wr_ptr` (which was 7). The `empty` flag asserted, and the 8th read in the testbench loop was blocked.
+1.  **Fill:** `wr_en=1`, `rd_en=0`. I wrote 8 items (0-7). On the 8th write, `wptr` became 7 and `count=DEPTH`. Thus `full` flag asserted.
+2.  **Simultaneous R/W:** `wr_en=1`, `rd_en=1`. The pointers "chased" each other around the buffer while maintaining the count.
+3.  **Drain:** `wr_en=0`, `rd_en=1`. I read 8 items. When the last item was read, `rd_ptr` incremented to 7 and the `empty` flag asserted.
 
 <img width="1004" height="557" alt="image" src="https://github.com/user-attachments/assets/05447539-276c-4533-b158-e5e0b1196a2c" />
-
 
 -----
 
 ## 🔍 Observations
 
-  * **Logic:** This design uses pure pointer comparison. This can be faster and use fewer logic resources than a separate counter which is another way to flag the pointers.
-  * **The Trade-off:** The sacrificial slot method (`full = (wptr_next == rd_ptr)`) is the trade-off. My `DEPTH=8` FIFO can now only hold **7** items. This is a common and acceptable trade-off in hardware design.
-  * **Robust Pointers:** I calculated the next pointer value (`wptr_next`) explicitly. Using just `(wr_ptr + 1) == rd_ptr` in the `assign` statement can be ambiguous depending on expression widths, so this is a safer, more robust implementation.
+  * **Logic:** This design uses counter for setting the flags. 
 
 -----
 
