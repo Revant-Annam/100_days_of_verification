@@ -49,7 +49,7 @@ When I synthesized this design, the tool inferred:
       * `empty`: One 3-bit comparator (`wr_ptr == rd_ptr`).
       * `full`: One 3-bit adder (for `wr_ptr + 1`), a MUX (for the wrap-around), and one 3-bit comparator.
 
-<img width="1555" height="768" alt="image" src="https://github.com/user-attachments/assets/73c74101-6795-4712-967b-7fa3f4c2e629" />
+<img width="522" height="501" alt="Screenshot from 2026-02-19 14-25-50" src="https://github.com/user-attachments/assets/a2e6a2bf-5492-48d5-aab6-69b46cec2c69" />
 
 -----
 
@@ -61,7 +61,8 @@ My simulation waveform showed:
 2.  **Simultaneous R/W:** `wr_en=1`, `rd_en=1`. The pointers "chased" each other around the buffer, and the `full` flag remained asserted.
 3.  **Drain:** `wr_en=0`, `rd_en=1`. I read 7 items. When the last item was read, `rd_ptr` incremented to 7, making it equal to `wr_ptr` (which was 7). The `empty` flag asserted, and the 8th read in the testbench loop was blocked.
 
-<img width="1555" height="768" alt="image" src="https://github.com/user-attachments/assets/85203e95-5599-4b71-ad9d-0bbfb2e5b8e0" />
+<img width="1004" height="557" alt="image" src="https://github.com/user-attachments/assets/05447539-276c-4533-b158-e5e0b1196a2c" />
+
 
 -----
 
