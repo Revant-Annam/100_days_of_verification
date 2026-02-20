@@ -105,4 +105,4 @@ Asynchronous FIFOs are one of the most critical and commonly interviewed RTL top
 
 * ✅ Status: Completed
 * 🗓 Day: 15 / 100
-* 📚 Next: Day 16 – Booth's Multiplier →
+* 📚 Next: [Day 16 – Booth's Multiplier →](../Day16)
